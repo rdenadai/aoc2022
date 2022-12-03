@@ -31,7 +31,7 @@ def compute_part_2(s: str) -> int:
 if __name__ == "__main__":  # pragma: no cover
     module, day = parse_module_to_day(sys.modules[__name__].__package__)
 
-    InputDownloader(day=day)
+    InputDownloader(day=day)()
     with open(f"app/{module}/input.txt", "r") as file:
         contents = file.read()
         print("-" * 20)
