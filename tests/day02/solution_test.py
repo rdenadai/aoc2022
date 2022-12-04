@@ -2,7 +2,7 @@ import pytest
 
 from app.day02.parts import HANDS_MAP, compute_part_1, compute_part_2
 
-INPUT_TXT = """
+INPUT_TXT = """\
 A Y
 B X
 C Z

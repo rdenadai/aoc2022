@@ -87,6 +87,22 @@ class InputSubmit:
         return False, "Unknown error"
 
 
+def main(day, module, compute_part_1, compute_part_2) -> int:
+    InputDownloader(day=day)()
+    input_submit: InputSubmit = InputSubmit(day=day)
+    with open(f"app/{module}/input.txt", "r") as file:
+        contents = file.read()
+        print("-" * 20)
+        answer_part_1 = compute_part_1(contents)
+        print("Part 1 answer: ", answer_part_1)
+        print(input_submit.submit(part=1, answer=str(answer_part_1)))
+        print("-" * 20)
+        answer_part_2 = compute_part_2(contents)
+        print("Part 2 answer: ", answer_part_2)
+        print(input_submit.submit(part=2, answer=str(answer_part_2)))
+    return 0
+
+
 def parse_module_to_day(module_name: str = "") -> Tuple[str, int]:
     module_name = "app.day01" if not module_name or not isinstance(module_name, str) else module_name
     splitted: Optional[List] = module_name.split(".")
@@ -104,7 +120,7 @@ def timing(_func: Callable):
     def wrapped(*args, **kwargs) -> Callable:
         start = perf_counter()
         result = _func(*args, **kwargs)
-        print(f"Elapsed time: {perf_counter() - start:.2f} seconds")
+        print(f"Elapsed time: {perf_counter() - start:.5f} seconds")
         return result
 
     return wrapped

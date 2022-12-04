@@ -1,7 +1,7 @@
 import sys
 from enum import Enum
 
-from app.support.utils import InputDownloader, parse_module_to_day, timing
+from app.support.utils import main, parse_module_to_day, timing
 
 
 class Outcome(int, Enum):
@@ -101,10 +101,4 @@ def compute_part_2(s: str) -> int:
 if __name__ == "__main__":  # pragma: no cover
     module, day = parse_module_to_day(sys.modules[__name__].__package__)
 
-    InputDownloader(day=day)()
-    with open(f"app/{module}/input.txt", "r") as file:
-        contents = file.read()
-        print("-" * 20)
-        print("Part 1 answer: ", compute_part_1(contents.strip()))
-        print("-" * 20)
-        print("Part 2 answer: ", compute_part_2(contents.strip()))
+    main(day, module, compute_part_1, compute_part_2)

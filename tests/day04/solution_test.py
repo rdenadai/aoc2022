@@ -2,7 +2,7 @@ import pytest
 
 from app.day04.parts import compute_part_1, compute_part_2
 
-INPUT_TXT = """
+INPUT_TXT = """\
 2-4,6-8
 2-3,4-5
 5-7,7-9

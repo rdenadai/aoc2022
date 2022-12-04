@@ -1,7 +1,7 @@
 import sys
-from typing import List, Tuple
+from typing import Tuple
 
-from app.support.utils import InputDownloader, InputSubmit, parse_module_to_day, timing
+from app.support.utils import main, parse_module_to_day, timing
 
 
 def _parse_line(line: str) -> Tuple[int, ...]:
@@ -34,15 +34,4 @@ def compute_part_2(s: str) -> int:
 if __name__ == "__main__":  # pragma: no cover
     module, day = parse_module_to_day(sys.modules[__name__].__package__)
 
-    InputDownloader(day=day)()
-    input_submit: InputSubmit = InputSubmit(day=day)
-    with open(f"app/{module}/input.txt", "r") as file:
-        contents = file.read()
-        print("-" * 20)
-        answer_part_1 = compute_part_1(contents.strip())
-        print("Part 1 answer: ", answer_part_1)
-        print(input_submit.submit(part=1, answer=str(answer_part_1)))
-        print("-" * 20)
-        answer_part_2 = compute_part_2(contents.strip())
-        print("Part 2 answer: ", answer_part_2)
-        print(input_submit.submit(part=2, answer=str(answer_part_2)))
+    main(day, module, compute_part_1, compute_part_2)

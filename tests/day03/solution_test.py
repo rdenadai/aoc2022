@@ -2,7 +2,7 @@ import pytest
 
 from app.day03.parts import compute_part_1, compute_part_2
 
-INPUT_TXT = """
+INPUT_TXT = """\
 vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg

@@ -2,7 +2,8 @@ import pytest
 
 from app.day01.parts import compute_part_1, compute_part_2
 
-INPUT_TXT = """1000
+INPUT_TXT = """\
+1000
 2000
 3000
 
