@@ -133,3 +133,4 @@ dmypy.json
 
 # Advent of Code data
 input.txt
+.submit_*
