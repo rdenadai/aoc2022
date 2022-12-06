@@ -23,19 +23,22 @@ def _get_token() -> str:
     return token
 
 
-class InputDownloader:
+class InputDownload:
     def __init__(self, day: int, year: int = 2022) -> None:
         self.day = day
         self.year = year
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
+    def download(self) -> str:
         filename = f"app/day{self.day:02}/input.txt"
         if os.path.exists(filename):
-            return
+            with open(filename, "r", encoding="utf-8") as file:
+                return file.read()
+        contents: str = self._download_input_data()
         with open(filename, "w", encoding="utf-8") as file:
-            file.write(self._download())
+            file.write(contents)
+        return contents
 
-    def _download(self) -> str:
+    def _download_input_data(self) -> str:
         with httpx.Client() as client:
             headers = {"Cookie": _get_token()}
             req = client.get(
@@ -88,18 +91,16 @@ class InputSubmit:
 
 
 def main(day, module, compute_part_1, compute_part_2) -> int:
-    InputDownloader(day=day)()
     input_submit: InputSubmit = InputSubmit(day=day)
-    with open(f"app/{module}/input.txt", "r") as file:
-        contents = file.read()
-        print("-" * 20)
-        answer_part_1 = compute_part_1(contents)
-        print("Part 1 answer: ", answer_part_1)
-        print(input_submit.submit(part=1, answer=str(answer_part_1)))
-        print("-" * 20)
-        answer_part_2 = compute_part_2(contents)
-        print("Part 2 answer: ", answer_part_2)
-        print(input_submit.submit(part=2, answer=str(answer_part_2)))
+    contents: str = InputDownload(day=day).download()
+    print("-" * 20)
+    answer_part_1 = compute_part_1(contents)
+    print("Part 1 answer: ", answer_part_1)
+    print(input_submit.submit(part=1, answer=str(answer_part_1)))
+    print("-" * 20)
+    answer_part_2 = compute_part_2(contents)
+    print("Part 2 answer: ", answer_part_2)
+    print(input_submit.submit(part=2, answer=str(answer_part_2)))
     return 0
 
 
