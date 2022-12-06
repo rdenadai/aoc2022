@@ -7,6 +7,14 @@ from app.day06.parts import compute_part_1, compute_part_2
     "input_, expected",
     [
         (
+            "",
+            0,
+        ),
+        (
+            None,
+            0,
+        ),
+        (
             "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
             7,
         ),

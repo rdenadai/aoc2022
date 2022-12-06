@@ -6,12 +6,16 @@ from app.support.utils import main, parse_module_to_day, timing
 
 
 def compute(s: str, size: int) -> int:
-    i, k = 0, size
+    """
+    # Not compact, but easier to 'understand' ... and faster (don't need to run through the whole list)
     for i, _ in enumerate(s):
-        slice_ = s[i : i + size]
-        if len(set(slice_)) == size:
-            return s.index(slice_) + size
-    return 0
+        if len(set(s[i : i + size])) == size:
+            return i + size
+    """
+    if not s:
+        return 0
+    (total, *_) = (i + size for i, _ in enumerate(s) if len(set(s[i : i + size])) == size)
+    return total
 
 
 @timing
