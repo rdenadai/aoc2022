@@ -15,6 +15,31 @@ RIGHT = "That's the right answer!"
 ALREADY_DONE = re.compile(r"You don't seem to be solving.*\?")
 
 
+def parse_module_to_day(module_name: str = "") -> Tuple[str, int]:
+    if not module_name or not isinstance(module_name, str):
+        return "day01", 1
+
+    splitted: Optional[List] = module_name.split(".")
+    if splitted:
+        try:
+            module, sday = splitted[-1], splitted[-1]
+            return module, int(sday.replace("day", ""))
+        except ValueError:
+            ...
+    return "day01", 1
+
+
+def timing(_func: Callable):
+    @wraps(_func)
+    def wrapped(*args, **kwargs) -> Callable:
+        start = perf_counter()
+        result = _func(*args, **kwargs)
+        print(f"Elapsed time: {perf_counter() - start:.5f} seconds")
+        return result
+
+    return wrapped
+
+
 def _get_token() -> str:
     root_dir = dirname(abspath(__file__))
     with open(f"{root_dir}/../../.env", "r", encoding="utf-8") as file:
@@ -88,6 +113,7 @@ class InputSubmit:
         return False, "Unknown error"
 
 
+@timing
 def main(day, module, compute_part_1, compute_part_2) -> int:
     input_submit: InputSubmit = InputSubmit(day=day)
     contents: str = InputDownload(day=day).download()
@@ -99,29 +125,5 @@ def main(day, module, compute_part_1, compute_part_2) -> int:
     answer_part_2 = compute_part_2(contents)
     print("Part 2 answer: ", answer_part_2)
     print(input_submit.submit(part=2, answer=str(answer_part_2)))
+    print("-" * 20)
     return 0
-
-
-def parse_module_to_day(module_name: str = "") -> Tuple[str, int]:
-    if not module_name or not isinstance(module_name, str):
-        return "day01", 1
-
-    splitted: Optional[List] = module_name.split(".")
-    if splitted:
-        try:
-            module, sday = splitted[-1], splitted[-1]
-            return module, int(sday.replace("day", ""))
-        except ValueError:
-            ...
-    return "day01", 1
-
-
-def timing(_func: Callable):
-    @wraps(_func)
-    def wrapped(*args, **kwargs) -> Callable:
-        start = perf_counter()
-        result = _func(*args, **kwargs)
-        print(f"Elapsed time: {perf_counter() - start:.5f} seconds")
-        return result
-
-    return wrapped
