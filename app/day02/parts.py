@@ -1,39 +1,37 @@
 import sys
-from enum import Enum
+from enum import IntEnum
 
 from app.support.utils import main, parse_module_to_day, timing
 
 
-class Outcome(int, Enum):
+class Outcome(IntEnum):
     LOOSE = 0
     DRAW = 3
     WON = 6
 
 
-class Game(int, Enum):
+class Game(IntEnum):
     ROCK = 1
     PAPER = 2
     SCISSOR = 3
 
     def __eq__(self, __o: object) -> bool:
-        if isinstance(__o, Game):
-            return self.value == __o.value
-        return False
+        return isinstance(__o, Game) and self.value == __o.value
 
     def __gt__(self, __o: object) -> bool:
         if isinstance(__o, Game) and (
-            (self.name == "ROCK" and __o.name == "SCISSOR")
-            or (self.name == "SCISSOR" and __o.name == "PAPER")
-            or (self.name == "PAPER" and __o.name == "ROCK")
+            (self == Game.ROCK and __o == Game.SCISSOR)
+            or (self == Game.SCISSOR and __o == Game.PAPER)
+            or (self == Game.PAPER and __o == Game.ROCK)
         ):
             return True
         return False
 
     def __lt__(self, __o: object) -> bool:
         if isinstance(__o, Game) and (
-            (self.name == "SCISSOR" and __o.name == "ROCK")
-            or (self.name == "PAPER" and __o.name == "SCISSOR")
-            or (self.name == "ROCK" and __o.name == "PAPER")
+            (self == Game.SCISSOR and __o == Game.ROCK)
+            or (self == Game.PAPER and __o == Game.SCISSOR)
+            or (self == Game.ROCK and __o == Game.PAPER)
         ):
             return True
         return False

@@ -3,7 +3,7 @@ from string import ascii_lowercase, ascii_uppercase
 
 from app.support.utils import main, parse_module_to_day, timing
 
-POINTS = dict(zip(ascii_lowercase, range(1, 27))) | dict(zip(ascii_uppercase, range(27, 53)))
+POINTS = dict(zip(ascii_lowercase + ascii_uppercase, range(1, 53)))
 
 
 @timing
@@ -11,7 +11,7 @@ def compute_part_1(s: str) -> int:
     total, points = 0, POINTS
     for line in filter(None, s.splitlines()):
         split_pos = len(line) // 2
-        first_half, sec_half = list(line[:split_pos]), list(line[split_pos:])
+        first_half, sec_half = line[:split_pos], line[split_pos:]
         common = set(first_half) & set(sec_half)
         total += sum(points[c] for c in common)
     return total

@@ -1,6 +1,4 @@
 import sys
-from collections import defaultdict
-from typing import Iterable, List, Tuple
 
 from app.support.utils import main, parse_module_to_day, timing
 

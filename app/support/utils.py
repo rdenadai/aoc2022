@@ -5,7 +5,7 @@ import re
 from functools import wraps
 from os.path import abspath, dirname
 from time import perf_counter
-from typing import Any, Callable, List, Optional, Tuple
+from typing import Callable, List, Optional, Tuple
 
 import httpx
 
@@ -17,10 +17,8 @@ ALREADY_DONE = re.compile(r"You don't seem to be solving.*\?")
 
 def _get_token() -> str:
     root_dir = dirname(abspath(__file__))
-    token: str = "session="
     with open(f"{root_dir}/../../.env", "r", encoding="utf-8") as file:
-        token = file.read().strip()
-    return token
+        return file.read().strip()
 
 
 class InputDownload:
@@ -105,7 +103,9 @@ def main(day, module, compute_part_1, compute_part_2) -> int:
 
 
 def parse_module_to_day(module_name: str = "") -> Tuple[str, int]:
-    module_name = "app.day01" if not module_name or not isinstance(module_name, str) else module_name
+    if not module_name or not isinstance(module_name, str):
+        return "day01", 1
+
     splitted: Optional[List] = module_name.split(".")
     if splitted:
         try:
