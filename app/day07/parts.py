@@ -37,9 +37,9 @@ def get_children_part_2(node: Node) -> Iterable[int]:
 
 
 def sum_bytes_to_parents(node: Node, bytes_: int) -> None:
-    if node.parent:
+    while node.parent:
         node.parent.size_bytes += bytes_
-        sum_bytes_to_parents(node.parent, bytes_)
+        node = node.parent
 
 
 def parse_input(s: str) -> Node:
